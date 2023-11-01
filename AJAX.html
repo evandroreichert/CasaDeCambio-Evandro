@@ -23,6 +23,15 @@
             aria-describedby="inputGroup-sizing-lg">
     </div> 
 
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="operacao" id="comprar" value="valorVenda">
+        <label class="form-check-label" for="comprar">Comprar</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="operacao" id="vender" value="valorCompra">
+        <label class="form-check-label" for="vender">Vender</label>
+      </div>
+
     <select id="selectPara" class="form-select form-select-lg mb-3" aria-label="Large select example">
         <option selected>Escolha uma moeda</option>
     </select>
@@ -45,12 +54,6 @@
         var ano = dataAtual.getFullYear();
 
         var dataFormatada = dia + '-' + mes + '-' + ano;
-
-        const btBuscarCep = document.getElementById("idBtBuscarCep")
-
-        btBuscarCep.onclick = function () {
-            buscarCEP(document.getElementById("idCep").value)
-        }
  
         // request busca de moedas disponíveis e cria elas como uma option
         function buscarMoedas() {
