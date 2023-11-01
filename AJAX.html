@@ -77,7 +77,31 @@
             xhr.send();
         }
 
+        let selectDe = document.getElementById("selectDe")
+        let selectPara = document.getElementById("selectPara")
 
+        // request das cotacoes da moeda de entrada
+        selectDe.addEventListener('change', () => {
+            let selectDe = document.getElementById("selectDe")
+            let selectPara = document.getElementById("selectPara")
+
+            var xhrEntrada = new XMLHttpRequest();
+
+            xhrEntrada.open("GET", "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaDia(moeda=@moeda,dataCotacao=@dataCotacao)?@moeda='" + selectDe.value + "'&@dataCotacao='" + dataFormatada + "'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,tipoBoletim");
+
+            xhrEntrada.addEventListener("load", function () {
+                let resposta = xhrEntrada.responseText;
+                let enderecoOBJ = JSON.parse(resposta);
+
+                let indiceFechamento = enderecoOBJ.value[4]
+                let cotacaoCompraEntrada = indiceFechamento.cotacaoCompra
+                let cotacaoVendaEntrada = indiceFechamento.cotacaoVenda
+
+            });
+
+            xhrEntrada.send();
+
+        })
 
     </script>
 
