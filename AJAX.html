@@ -37,6 +37,47 @@
 
     <script>
 
+        buscarMoedas()
+
+        var dataAtual = new Date();
+        var dia = dataAtual.getDate();
+        var mes = dataAtual.getMonth() + 1;
+        var ano = dataAtual.getFullYear();
+
+        var dataFormatada = dia + '-' + mes + '-' + ano;
+
+        const btBuscarCep = document.getElementById("idBtBuscarCep")
+
+        btBuscarCep.onclick = function () {
+            buscarCEP(document.getElementById("idCep").value)
+        }
+ 
+        // request busca de moedas disponíveis e cria elas como uma option
+        function buscarMoedas() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("GET", "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/Moedas?$top=100&$skip=0&$format=json&$select=simbolo,nomeFormatado,tipoMoeda");
+
+            xhr.addEventListener("load", function () {
+                let resposta = xhr.responseText;
+                let enderecoOBJ = JSON.parse(resposta);
+
+                let selectDe = document.getElementById("selectDe");
+                let selectPara = document.getElementById("selectPara");
+
+                for (const item of enderecoOBJ.value) {
+                    let option = document.createElement("option");
+                    option.textContent = item.nomeFormatado;
+                    option.value = item.simbolo
+                    selectDe.appendChild(option);
+                    selectPara.appendChild(option.cloneNode(true));
+                }
+            });
+
+            xhr.send();
+        }
+
+
 
     </script>
 
