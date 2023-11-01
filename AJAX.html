@@ -101,6 +101,25 @@
 
             xhrEntrada.send();
 
+            // request das cotacoes da moeda de saida
+            selectPara.addEventListener('change', () => {
+                var xhrSaida = new XMLHttpRequest()
+
+                xhrSaida.open("GET", "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaDia(moeda=@moeda,dataCotacao=@dataCotacao)?@moeda='" + selectPara.value + "'&@dataCotacao='" + dataFormatada + "'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,tipoBoletim");
+
+                xhrSaida.addEventListener("load", function () {
+                    let resposta = xhrSaida.responseText;
+                    let enderecoOBJ = JSON.parse(resposta);
+
+                    let indiceFechamento = enderecoOBJ.value[4]
+                    let cotacaoCompraSaida = indiceFechamento.cotacaoCompra
+                    let cotacaoVendaSaida = indiceFechamento.cotacaoVenda
+
+                });
+
+                xhrSaida.send();
+            })
+
         })
 
     </script>
